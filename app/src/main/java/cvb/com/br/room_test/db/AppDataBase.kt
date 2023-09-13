@@ -10,7 +10,11 @@ import cvb.com.br.room_test.db.dao.UserDao
 import cvb.com.br.room_test.db.entity.User
 import cvb.com.br.room_test.db.migration.Migration1To2
 
-@Database(entities = [User::class], version = 1, exportSchema = true)
+@Database(
+    entities = [User::class],
+    version = 2,
+    exportSchema = true
+)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -23,7 +27,7 @@ abstract class AppDataBase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java,"app_database")
                     .addCallback(databaseCallback)
-                    //.addMigrations(Migration1To2())
+                    .addMigrations(Migration1To2())
                     .build()
 
                 INSTANCE = instance
