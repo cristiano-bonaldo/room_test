@@ -33,6 +33,11 @@ android {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
 
+    sourceSets {
+        // Adds exported schema location as test app assets.
+        getByName("androidTest").assets.srcDir("$projectDir/schemas")
+    }
+
     buildFeatures {
         viewBinding = true
     }
@@ -71,8 +76,8 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
 
-    testImplementation("androidx.room:room-testing:$roomVersion")
-
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    androidTestImplementation("androidx.room:room-testing:$roomVersion")
 }

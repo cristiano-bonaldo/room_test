@@ -13,5 +13,8 @@ data class User(
     val email: String = "",
 
     @ColumnInfo(name="created_at")
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+
+//    @ColumnInfo(name="is_admin", defaultValue = "0")
+//    val isAdmin: Int = 0
 )
