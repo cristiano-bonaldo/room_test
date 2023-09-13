@@ -10,11 +10,15 @@ data class User(
     val id: Long,
 
     val name: String = "",
+
+    @ColumnInfo(name="e_mail")
     val email: String = "",
 
     @ColumnInfo(name="created_at")
     val createdAt: Long = System.currentTimeMillis(),
 
     @ColumnInfo(name="is_admin")
-    val isAdmin: Int = 0
+    val isAdmin: Int = 0,
+
+    val login: String = "123"
 )

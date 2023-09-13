@@ -24,7 +24,10 @@ class FullMigrationTest {
     private val TEST_DB = "migration_test.db"
 
     // Array of all migrations.
-    private val ALL_MIGRATIONS = arrayOf(Migration1To2())
+    private val ALL_MIGRATIONS = arrayOf(
+        Migration1To2(),
+        Migration2To3()
+    )
 
     @Test
     fun migrateAll() {
@@ -42,8 +45,8 @@ class FullMigrationTest {
         ).addMigrations(*ALL_MIGRATIONS).build()
 
         val cursor = db.query("SELECT * FROM user", null)
-        // User Columns = "id", "name", "e_mail", "created_at", "is_admin"
-        Assert.assertTrue(cursor.columnNames.size == 5)
+        // User Columns = "id", "name", "e_mail", "created_at", "is_admin", login
+        Assert.assertTrue(cursor.columnNames.size == 6)
 
         db.close()
     }

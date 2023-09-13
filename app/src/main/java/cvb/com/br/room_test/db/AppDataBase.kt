@@ -1,6 +1,8 @@
 package cvb.com.br.room_test.db
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
@@ -9,10 +11,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import cvb.com.br.room_test.db.dao.UserDao
 import cvb.com.br.room_test.db.entity.User
 import cvb.com.br.room_test.db.migration.Migration1To2
+import cvb.com.br.room_test.db.migration.Migration2To3
 
 @Database(
     entities = [User::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -27,7 +30,10 @@ abstract class AppDataBase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java,"app_database")
                     .addCallback(databaseCallback)
-                    .addMigrations(Migration1To2())
+                    .addMigrations(
+                        Migration1To2(),
+                        Migration2To3()
+                    )
                     .build()
 
                 INSTANCE = instance
@@ -43,10 +49,20 @@ abstract class AppDataBase : RoomDatabase() {
                 Log.i("CVB", "Database - onCreate")
 
                 (1..10).forEach { idx ->
-                    val name = "user-$idx"
-                    val mail = "user-$idx@test.com"
-                    val date = System.currentTimeMillis()
-                    db.execSQL("INSERT INTO user (name, email, created_at) values (\"$name\",\"$mail\",$date)")
+                    val name  = "user-$idx"
+                    val mail  = "user-$idx@test.com"
+                    val login = "login#$idx"
+                    val date  = System.currentTimeMillis()
+                    val isAdmin = 0
+
+                    val cv = ContentValues()
+                    cv.put("name", name)
+                    cv.put("e_mail", mail)
+                    cv.put("created_at", date)
+                    cv.put("login", login)
+                    cv.put("is_admin", isAdmin)
+
+                    db.insert("user", SQLiteDatabase.CONFLICT_REPLACE, cv)
                 }
             }
 
