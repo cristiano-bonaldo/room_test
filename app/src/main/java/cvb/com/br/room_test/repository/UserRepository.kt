@@ -1,6 +1,6 @@
 package cvb.com.br.room_test.repository
 
-import cvb.com.br.room_test.data.UserDataSource
+import cvb.com.br.room_test.data.datasource.UserDataSource
 import cvb.com.br.room_test.db.entity.User
 
 class UserRepository(private val dataSource: UserDataSource) {

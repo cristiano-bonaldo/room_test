@@ -1,4 +1,4 @@
-package cvb.com.br.room_test.data
+package cvb.com.br.room_test.data.datasource
 
 import cvb.com.br.room_test.db.entity.User
 

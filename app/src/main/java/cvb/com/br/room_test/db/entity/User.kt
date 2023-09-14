@@ -20,5 +20,10 @@ data class User(
     @ColumnInfo(name="is_admin")
     val isAdmin: Int = 0,
 
-    val login: String = "123"
+    val login: String = "123",
+
+    @ColumnInfo(name="department_id")
+    val idDepartment: Long = 0L
 )
+
+
