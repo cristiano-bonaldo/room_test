@@ -11,7 +11,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import cvb.com.br.room_test.db.dao.DepartmentDao
 import cvb.com.br.room_test.db.dao.ModuleDao
 import cvb.com.br.room_test.db.dao.UserDao
+import cvb.com.br.room_test.db.dao.UserDepartmentJoinDao
 import cvb.com.br.room_test.db.dao.UserModuleDao
+import cvb.com.br.room_test.db.dao.UserModuleJoinDao
 import cvb.com.br.room_test.db.entity.Department
 import cvb.com.br.room_test.db.entity.User
 import cvb.com.br.room_test.db.entity.UserModule
@@ -37,6 +39,9 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun moduleDao(): ModuleDao
     abstract fun departmentDao(): DepartmentDao
     abstract fun userModuleDao(): UserModuleDao
+    abstract fun userDepartmentJoinDao(): UserDepartmentJoinDao
+    abstract fun userModuleJoinDao(): UserModuleJoinDao
+
 
     companion object {
         @Volatile

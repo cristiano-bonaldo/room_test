@@ -8,9 +8,13 @@ import cvb.com.br.room_test.R
 import cvb.com.br.room_test.data.LocalDepartmentDataSource
 import cvb.com.br.room_test.data.LocalModuleDataSource
 import cvb.com.br.room_test.data.LocalUserDataSource
+import cvb.com.br.room_test.data.LocalUserDepartmentJoinDataSource
 import cvb.com.br.room_test.data.LocalUserModuleDataSource
+import cvb.com.br.room_test.data.LocalUserModuleJoinDataSource
 import cvb.com.br.room_test.repository.DepartmentRepository
 import cvb.com.br.room_test.repository.ModuleRepository
+import cvb.com.br.room_test.repository.UserDepartmentJoinRepository
+import cvb.com.br.room_test.repository.UserModuleJoinRepository
 import cvb.com.br.room_test.repository.UserModuleRepository
 import cvb.com.br.room_test.repository.UserRepository
 import cvb.com.br.room_test.viewmodel.MainViewModel
@@ -31,7 +35,19 @@ class MainActivity : AppCompatActivity() {
         val userModuleDataSource = LocalUserModuleDataSource(applicationContext)
         val userModuleRepository = UserModuleRepository(userModuleDataSource)
 
-        MainViewModelFactory(userRepository, moduleRepository, departmentRepository, userModuleRepository)
+        val userDepartmentDataSource = LocalUserDepartmentJoinDataSource(applicationContext)
+        val userDepartmentRepository = UserDepartmentJoinRepository(userDepartmentDataSource)
+
+        val userModuleJoinDataSource = LocalUserModuleJoinDataSource(applicationContext)
+        val userModuleJoinRepository = UserModuleJoinRepository(userModuleJoinDataSource)
+
+        MainViewModelFactory(
+            userRepository,
+            moduleRepository,
+            departmentRepository,
+            userModuleRepository,
+            userDepartmentRepository,
+            userModuleJoinRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +68,14 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.userModuleList.observe(this) { userModuleList ->
             userModuleList.forEach { userModule -> Log.i("CVB", userModule.toString()) }
+        }
+
+        viewModel.userDepartmentJoinList.observe(this) { userDepartmentJoinList ->
+            userDepartmentJoinList.forEach { userDepartmentJoin -> Log.i("CVB", userDepartmentJoin.toString()) }
+        }
+
+        viewModel.userModuleJoinList.observe(this) { userModuleJoinList ->
+            userModuleJoinList.forEach { userModuleJoin -> Log.i("CVB", userModuleJoin.toString()) }
         }
 
         viewModel.loadData()
