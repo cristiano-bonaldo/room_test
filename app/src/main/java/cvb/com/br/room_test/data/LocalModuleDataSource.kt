@@ -1,13 +1,11 @@
 package cvb.com.br.room_test.data
 
-import android.content.Context
 import cvb.com.br.room_test.data.datasource.ModuleDataSource
-import cvb.com.br.room_test.db.AppDataBase
+import cvb.com.br.room_test.db.dao.ModuleDao
 import cvb.com.br.room_test.db.entity.Module
+import javax.inject.Inject
 
-class LocalModuleDataSource(context: Context) : ModuleDataSource {
-
-    private val moduleDao = AppDataBase.getDatabase(context).moduleDao()
+class LocalModuleDataSource @Inject constructor(private val moduleDao: ModuleDao) : ModuleDataSource {
 
     override suspend fun getList(): List<Module> {
         return moduleDao.getList()

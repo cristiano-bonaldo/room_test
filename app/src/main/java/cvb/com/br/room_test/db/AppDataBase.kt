@@ -44,6 +44,7 @@ abstract class AppDataBase : RoomDatabase() {
 
 
     companion object {
+        /*
         @Volatile
         private var INSTANCE: AppDataBase? = null
 
@@ -63,8 +64,9 @@ abstract class AppDataBase : RoomDatabase() {
                 return instance
             }
         }
+        */
 
-        private val databaseCallback = object : RoomDatabase.Callback() {
+        val databaseCallback = object : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
 

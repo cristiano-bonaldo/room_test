@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -72,12 +73,30 @@ dependencies {
 
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+
+    val coroutineVersion = "1.7.1"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
+
     //--
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("com.google.truth:truth:1.1.4")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+
+    //--
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     androidTestImplementation("androidx.room:room-testing:$roomVersion")
+    androidTestImplementation("com.google.truth:truth:1.1.4")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
+    androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }

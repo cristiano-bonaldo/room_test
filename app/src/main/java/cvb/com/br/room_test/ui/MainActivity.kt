@@ -2,58 +2,54 @@ package cvb.com.br.room_test.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import cvb.com.br.room_test.R
-import cvb.com.br.room_test.data.LocalDepartmentDataSource
-import cvb.com.br.room_test.data.LocalModuleDataSource
-import cvb.com.br.room_test.data.LocalUserDataSource
-import cvb.com.br.room_test.data.LocalUserDepartmentJoinDataSource
-import cvb.com.br.room_test.data.LocalUserModuleDataSource
-import cvb.com.br.room_test.data.LocalUserModuleJoinDataSource
-import cvb.com.br.room_test.repository.DepartmentRepository
-import cvb.com.br.room_test.repository.ModuleRepository
-import cvb.com.br.room_test.repository.UserDepartmentJoinRepository
-import cvb.com.br.room_test.repository.UserModuleJoinRepository
-import cvb.com.br.room_test.repository.UserModuleRepository
-import cvb.com.br.room_test.repository.UserRepository
+import cvb.com.br.room_test.databinding.ActivityMainBinding
+import cvb.com.br.room_test.ui.adapter.UserAdapter
 import cvb.com.br.room_test.viewmodel.MainViewModel
-import cvb.com.br.room_test.viewmodel.MainViewModelFactory
+import cvb.com.br.room_test.viewmodel.sealed.LoadUserStatus
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<MainViewModel> {
-        val userDataSource = LocalUserDataSource(applicationContext)
-        val userRepository = UserRepository(userDataSource)
+    private val viewModel by viewModels<MainViewModel>()
 
-        val moduleDataSource = LocalModuleDataSource(applicationContext)
-        val moduleRepository = ModuleRepository(moduleDataSource)
+    private lateinit var binding: ActivityMainBinding
 
-        val departmentDataSource = LocalDepartmentDataSource(applicationContext)
-        val departmentRepository = DepartmentRepository(departmentDataSource)
-
-        val userModuleDataSource = LocalUserModuleDataSource(applicationContext)
-        val userModuleRepository = UserModuleRepository(userModuleDataSource)
-
-        val userDepartmentDataSource = LocalUserDepartmentJoinDataSource(applicationContext)
-        val userDepartmentRepository = UserDepartmentJoinRepository(userDepartmentDataSource)
-
-        val userModuleJoinDataSource = LocalUserModuleJoinDataSource(applicationContext)
-        val userModuleJoinRepository = UserModuleJoinRepository(userModuleJoinDataSource)
-
-        MainViewModelFactory(
-            userRepository,
-            moduleRepository,
-            departmentRepository,
-            userModuleRepository,
-            userDepartmentRepository,
-            userModuleJoinRepository)
-    }
+    private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        configUI()
+
+        configObserver()
+
+        configListener()
+
+        viewModel.loadData()
+    }
+
+    private fun configUI() {
+        adapter = UserAdapter()
+
+        binding.recycler.layoutManager = LinearLayoutManager(this)
+        binding.recycler.adapter = adapter
+    }
+
+    private fun configListener() {
+        binding.btLoadUser.setOnClickListener {
+            viewModel.loadUser()
+        }
+    }
+
+    private fun configObserver() {
         viewModel.moduleList.observe(this) { moduleList ->
             moduleList.forEach { module -> Log.i("CVB", module.toString()) }
         }
@@ -78,6 +74,25 @@ class MainActivity : AppCompatActivity() {
             userModuleJoinList.forEach { userModuleJoin -> Log.i("CVB", userModuleJoin.toString()) }
         }
 
-        viewModel.loadData()
+        // ======
+
+        viewModel.loadUserStatus.observe(this, this::onLoadUserStatus)
+    }
+
+    private fun onLoadUserStatus(loadUserStatus: LoadUserStatus) {
+        when (loadUserStatus) {
+            is LoadUserStatus.Loading -> {
+                Toast.makeText(this, "Loading User List...", Toast.LENGTH_SHORT).show()
+            }
+
+            is LoadUserStatus.Error -> {
+                Toast.makeText(this, "Error: ${loadUserStatus.error}", Toast.LENGTH_SHORT).show()
+            }
+
+            is LoadUserStatus.Success -> {
+                val userList = loadUserStatus.userList
+                adapter.submitList(userList)
+            }
+        }
     }
 }

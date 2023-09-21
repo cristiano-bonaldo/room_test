@@ -16,9 +16,13 @@ import cvb.com.br.room_test.repository.UserDepartmentJoinRepository
 import cvb.com.br.room_test.repository.UserModuleJoinRepository
 import cvb.com.br.room_test.repository.UserModuleRepository
 import cvb.com.br.room_test.repository.UserRepository
+import cvb.com.br.room_test.viewmodel.sealed.LoadUserStatus
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val moduleRepository: ModuleRepository,
     private val departmentRepository: DepartmentRepository,
@@ -26,6 +30,12 @@ class MainViewModel(
     private val userDepartmentJoinRepository: UserDepartmentJoinRepository,
     private val userModuleJoinRepository: UserModuleJoinRepository
 ) : ViewModel() {
+
+    private val mLoadUserStatus = MutableLiveData<LoadUserStatus>()
+    val loadUserStatus: LiveData<LoadUserStatus>
+        get() = mLoadUserStatus
+
+    //=========
 
     private val mUserList = MutableLiveData<List<User>>()
     val userList: LiveData<List<User>>
@@ -64,6 +74,34 @@ class MainViewModel(
             mUserDepartmentJoinList.value = userDepartmentJoinRepository.getList()
 
             mUserModuleJoinList.value = userModuleJoinRepository.getList()
+        }
+    }
+
+    fun loadUser() {
+        viewModelScope.launch {
+            try {
+                mLoadUserStatus.value = LoadUserStatus.Loading
+
+                val userList = userRepository.getList()
+
+                mLoadUserStatus.value = LoadUserStatus.Success(userList)
+            } catch (error: Throwable) {
+                mLoadUserStatus.value = LoadUserStatus.Error(error)
+            }
+        }
+    }
+
+    fun insertUser() {
+        viewModelScope.launch {
+            try {
+                mLoadUserStatus.value = LoadUserStatus.Loading
+
+                val userList = userRepository.getList()
+
+                mLoadUserStatus.value = LoadUserStatus.Success(userList)
+            } catch (error: Throwable) {
+                mLoadUserStatus.value = LoadUserStatus.Error(error)
+            }
         }
     }
 }
