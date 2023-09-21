@@ -12,9 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Load User"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btPixabay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_flower"
+        app:layout_constraintBottom_toBottomOf="@+id/btLoadUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btLoadUser" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

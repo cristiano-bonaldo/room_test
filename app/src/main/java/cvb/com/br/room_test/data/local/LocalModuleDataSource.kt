@@ -1,4 +1,4 @@
-package cvb.com.br.room_test.data
+package cvb.com.br.room_test.data.local
 
 import cvb.com.br.room_test.data.datasource.ModuleDataSource
 import cvb.com.br.room_test.db.dao.ModuleDao

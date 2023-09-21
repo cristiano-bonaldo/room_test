@@ -1,5 +1,6 @@
 package cvb.com.br.room_test.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity() {
     private fun configListener() {
         binding.btLoadUser.setOnClickListener {
             viewModel.loadUser()
+        }
+
+        binding.btPixabay.setOnClickListener {
+            val intent = Intent(this, PixabayActivity::class.java)
+            startActivity(intent)
         }
     }
 

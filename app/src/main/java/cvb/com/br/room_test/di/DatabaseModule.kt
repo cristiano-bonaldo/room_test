@@ -2,12 +2,12 @@ package cvb.com.br.room_test.di
 
 import android.content.Context
 import androidx.room.Room
-import cvb.com.br.room_test.data.LocalDepartmentDataSource
-import cvb.com.br.room_test.data.LocalModuleDataSource
-import cvb.com.br.room_test.data.LocalUserDataSource
-import cvb.com.br.room_test.data.LocalUserDepartmentJoinDataSource
-import cvb.com.br.room_test.data.LocalUserModuleDataSource
-import cvb.com.br.room_test.data.LocalUserModuleJoinDataSource
+import cvb.com.br.room_test.data.local.LocalDepartmentDataSource
+import cvb.com.br.room_test.data.local.LocalModuleDataSource
+import cvb.com.br.room_test.data.local.LocalUserDataSource
+import cvb.com.br.room_test.data.local.LocalUserDepartmentJoinDataSource
+import cvb.com.br.room_test.data.local.LocalUserModuleDataSource
+import cvb.com.br.room_test.data.local.LocalUserModuleJoinDataSource
 import cvb.com.br.room_test.data.datasource.DepartmentDataSource
 import cvb.com.br.room_test.data.datasource.ModuleDataSource
 import cvb.com.br.room_test.data.datasource.UserDataSource

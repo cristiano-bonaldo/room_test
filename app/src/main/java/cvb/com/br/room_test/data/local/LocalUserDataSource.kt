@@ -1,4 +1,4 @@
-package cvb.com.br.room_test.data
+package cvb.com.br.room_test.data.local
 
 import androidx.lifecycle.LiveData
 import cvb.com.br.room_test.data.datasource.UserDataSource
