@@ -18,12 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PixabayActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<PixabayViewModel> {
-        val pixabayDataSource: PixabayDataSource = RemotePixabayDataSource(RetrofitClient.apiInterface)
-        val pixabayRepository = PixabayRepository(pixabayDataSource)
-
-        PixabayViewModelFactory(pixabayRepository)
-    }
+    private val viewModel by viewModels<PixabayViewModel>()
 
     private lateinit var binding: ActivityPixabayBinding
 

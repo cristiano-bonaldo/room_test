@@ -21,12 +21,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "Pixabay_KEY", "\"39583503-28e0f98e3d5628cc0ee839a50\"")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String", "Pixabay_KEY", "\"39583503-28e0f98e3d5628cc0ee839a50\"")
         }
     }
 
@@ -50,6 +56,8 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
+    android.buildFeatures.buildConfig = true
 }
 
 dependencies {

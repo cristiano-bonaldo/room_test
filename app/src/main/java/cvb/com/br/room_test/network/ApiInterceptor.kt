@@ -1,16 +1,18 @@
 package cvb.com.br.room_test.network
 
+import cvb.com.br.room_test.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class ApiInterceptor : Interceptor {
+class ApiInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
         val originalHttpUrl = original.url
 
         val newUrl =
             originalHttpUrl.newBuilder()
-                .addQueryParameter("key", "39583503-28e0f98e3d5628cc0ee839a50")
+                .addQueryParameter("key", BuildConfig.Pixabay_KEY)
                 .build()
 
         val requestBuilder = original.newBuilder().url(newUrl)

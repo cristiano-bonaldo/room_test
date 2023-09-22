@@ -23,7 +23,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PixabayViewModel (private val pixabayRepository: PixabayRepository) : ViewModel() {
+@HiltViewModel
+class PixabayViewModel @Inject constructor(private val pixabayRepository: PixabayRepository) : ViewModel() {
 
     private val mLoadPixabayStatus = MutableLiveData<LoadPixabayStatus>()
     val loadPixabayStatus: LiveData<LoadPixabayStatus>
