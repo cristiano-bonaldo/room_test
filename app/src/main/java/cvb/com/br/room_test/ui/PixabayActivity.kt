@@ -22,6 +22,8 @@ class PixabayActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPixabayBinding
 
+    var count = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPixabayBinding.inflate(layoutInflater)
@@ -36,10 +38,34 @@ class PixabayActivity : AppCompatActivity() {
         binding.btLoad.setOnClickListener {
             viewModel.loadPixabay()
         }
+
+        binding.btSingleEvent.setOnClickListener {
+            viewModel.triggerSingleEvent()
+        }
+
+        binding.btManyEvents.setOnClickListener {
+            viewModel.triggerEvent()
+        }
     }
 
     private fun configObserver() {
         viewModel.loadPixabayStatus.observe(this, this::onLoadPixabayStatus)
+
+        //---
+
+        viewModel.showSingleToast.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { info ->
+                Toast.makeText(this@PixabayActivity, "Single Toast = $info", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //---
+
+        viewModel.showToast.observe(this) { event ->
+            event.peekContent().let { info ->
+                Toast.makeText(this@PixabayActivity, "Toast = $info", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun onLoadPixabayStatus(loadPixabayStatus: LoadPixabayStatus) {

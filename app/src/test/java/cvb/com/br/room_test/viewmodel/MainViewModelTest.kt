@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import cvb.com.br.room_test.data.DepartmentDataSourceFake
 import cvb.com.br.room_test.data.ModuleDataSourceFake
+import cvb.com.br.room_test.data.PixabayDataSourceFake
 import cvb.com.br.room_test.data.UserDataSourceFake
 import cvb.com.br.room_test.data.UserDepartmentJoinDataSourceFake
 import cvb.com.br.room_test.data.UserModuleDataSourceFake

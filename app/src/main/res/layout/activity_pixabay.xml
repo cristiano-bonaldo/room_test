@@ -12,8 +12,25 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="Load Pixabay [ flower ]"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btSingleEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Single Event"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btLoad" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btManyEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Many Events"
+        app:layout_constraintStart_toEndOf="@+id/btSingleEvent"
+        app:layout_constraintTop_toBottomOf="@+id/btLoad" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

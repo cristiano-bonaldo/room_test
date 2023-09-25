@@ -6,10 +6,10 @@ import cvb.com.br.room_test.network.model.PixabayResult
 import cvb.com.br.room_test.network.util.ApiHandleDataResult
 import javax.inject.Inject
 
-class RemotePixabayDataSource @Inject constructor(private val apiInterface: ApiService) : PixabayDataSource {
+class RemotePixabayDataSource @Inject constructor(private val apiService: ApiService) : PixabayDataSource {
 
     override suspend fun get(): PixabayResult {
-        return ApiHandleDataResult.handleData { apiInterface.search("flower") }
+        return ApiHandleDataResult.handleData { apiService.search("flower") }
     }
 
 }

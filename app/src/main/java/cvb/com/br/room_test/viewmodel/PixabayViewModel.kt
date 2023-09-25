@@ -19,12 +19,36 @@ import cvb.com.br.room_test.repository.UserModuleRepository
 import cvb.com.br.room_test.repository.UserRepository
 import cvb.com.br.room_test.viewmodel.sealed.LoadPixabayStatus
 import cvb.com.br.room_test.viewmodel.sealed.LoadUserStatus
+import cvb.com.br.room_test.viewmodel.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PixabayViewModel @Inject constructor(private val pixabayRepository: PixabayRepository) : ViewModel() {
+
+    private val singleToastEvent = Event("1")
+
+    private val _showSingleToast = MutableLiveData<Event<String>>()
+    val showSingleToast : LiveData<Event<String>>
+        get() = _showSingleToast
+
+
+    fun triggerSingleEvent() {
+        _showSingleToast.value = singleToastEvent
+    }
+
+    //=========
+
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showToast : LiveData<Event<String>>
+        get() = _showToast
+
+    fun triggerEvent() {
+        _showToast.value = Event("1")  // Trigger the event by setting a new Event as a new value
+    }
+
+    //=========
 
     private val mLoadPixabayStatus = MutableLiveData<LoadPixabayStatus>()
     val loadPixabayStatus: LiveData<LoadPixabayStatus>
