@@ -17,7 +17,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Default
+        //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Dagger Hilt
+        testInstrumentationRunner = "cvb.com.br.room_test.HiltTestRunner"
     }
 
     buildTypes {
@@ -86,8 +90,9 @@ dependencies {
 
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
-    implementation("com.google.dagger:hilt-android:2.47")
-    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    val daggerHiltVersion = "2.47"
+    implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
 
     val coroutineVersion = "1.7.1"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
@@ -108,6 +113,8 @@ dependencies {
     androidTestImplementation("com.google.truth:truth:1.1.4")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
     androidTestImplementation("androidx.arch.core:core-testing:2.2.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:$daggerHiltVersion")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
 }
 
 kapt {

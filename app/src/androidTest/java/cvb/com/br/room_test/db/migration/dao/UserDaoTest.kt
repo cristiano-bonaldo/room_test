@@ -9,7 +9,10 @@ import com.google.common.truth.Truth.assertThat
 import cvb.com.br.room_test.db.AppDataBase
 import cvb.com.br.room_test.db.dao.UserDao
 import cvb.com.br.room_test.db.entity.User
+import cvb.com.br.room_test.di.TestDatabase
 import cvb.com.br.room_test.util.getOrAwaitValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -17,24 +20,39 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
+//@RunWith(AndroidJUnit4::class) -> We are using the HiltTestRunner class, that was defined in build.gradle (testInstrumentationRunner = "cvb.com.br.room_test.HiltTestRunner")
 @SmallTest
+@HiltAndroidTest
 class UserDaoTest {
 
     // Run on the Main Thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var db: AppDataBase
+    // Dagger Hilt -> Needs this rule
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    //private lateinit var db: AppDataBase -> Without Dagger Hilt
+    @Inject
+    @TestDatabase
+    lateinit var db: AppDataBase
+
     private lateinit var userDao: UserDao
     @Before
     fun setup() {
+        /*
+        Without Dagger Hilt
+
         db = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             AppDataBase::class.java
         ).allowMainThreadQueries().build()
+        */
+        hiltRule.inject()
 
         userDao = db.userDao()
     }
